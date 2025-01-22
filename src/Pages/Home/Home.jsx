@@ -1,10 +1,9 @@
-
 const Home = () => {
-    return (
-        <div>
-            home
-        </div>
-    );
+  return (
+    <div className="navbar bg-base-100">
+      home
+    </div>
+  );
 };
 
 export default Home;
