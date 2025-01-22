@@ -49,6 +49,7 @@ const Register = () => {
             Register
           </button>
         </form>
+        <p className="font-semibold  text-center my-4">If you already have an account <Link to="/login" className="text-blue-500">Log in</Link></p>
     </div>
 
     <div className="md:w-1/2">
