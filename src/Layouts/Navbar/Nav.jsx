@@ -45,7 +45,7 @@ const Nav = () => {
             {navList}
           </ul>
         </div>
-        <Link className="text-xl font-bold font-cinzel md:text-3xl">
+        <Link to="/" className="text-xl font-bold font-cinzel md:text-3xl">
           <span className="text-blue-500">Trust</span>Pharma
         </Link>
       </div>
@@ -119,7 +119,7 @@ const Nav = () => {
               <a>Logout</a>
             </li>
           </ul>
-        </div> : <Link to="/login" className="px-4 py-2 font-inter font-semibold text-white bg-black rounded-lg hover:bg-black/80 transition-all">Join</Link>
+        </div> : <Link to="/login" className="px-2 md:px-4 py-1 md:py-2 font-inter font-semibold text-white bg-black rounded-lg hover:bg-black/80 transition-all">Join US</Link>
         }
       </div>
     </nav>

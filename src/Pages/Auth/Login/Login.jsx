@@ -1,7 +1,7 @@
 
 const Login = () => {
     return (
-        <div>
+        <div className="container mx-auto">
             Login
         </div>
     );
