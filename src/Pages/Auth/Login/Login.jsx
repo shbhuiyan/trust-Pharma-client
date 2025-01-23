@@ -1,13 +1,17 @@
 import Lottie from "lottie-react";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginLottie from "../../../../public/loginLottie.json";
 import GoogleButton from "../../../Components/Buttons/GoogleButton/GoogleButton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../Components/Hooks/AuthProviderHooks/useAuth";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [hide, setHide] = useState(true);
+  const {loginUser , user , setUser} = useAuth()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -15,7 +19,21 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const formSubmit = (formData) => {
-    console.log(formData);
+    const email = formData.email;
+    const password = formData.password
+console.log(email , password);
+    loginUser(email , password)
+    .then(result => {
+      const oldUser = result.user
+      setUser(oldUser);
+      console.log(oldUser);
+      navigate("/")
+      toast.success(`Welcome Back ${user.displayName || "anonymous"}` , {position:"top-center"})
+    })
+    .catch(err => {
+      err.message && toast.error("Please Check Your Email and Password" , {position:"top-center"})
+    })
+
   };
 
   return (

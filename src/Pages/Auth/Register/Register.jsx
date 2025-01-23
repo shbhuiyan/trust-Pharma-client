@@ -1,16 +1,20 @@
 import Lottie from "lottie-react";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import regAnimation from "../../../../public/register.json";
 import GoogleButton from "../../../Components/Buttons/GoogleButton/GoogleButton";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
+import useAuth from "../../../Components/Hooks/AuthProviderHooks/useAuth";
+import { toast } from "react-toastify";
 
 
 
 const Register = () => {
   const [hide, setHide] = useState(true);
+  const {createNewUser , setUser , updateUser} = useAuth()
+  const navigate = useNavigate()
 
   const imgBBApiKey = import.meta.env.VITE_ImgBB_API_KEY
 
@@ -28,7 +32,25 @@ const Register = () => {
             'content-type': 'multipart/form-data'
         }
     })
-    console.log(formData,res.data.data.display_url)
+    const imageUrl = res.data.data.display_url
+    const email = formData.email;
+    const name = formData.name
+    const password = formData.password
+    // const role = formData.role
+
+    createNewUser(email , password)
+    .then( result => {
+      const newUser = result.user
+      updateUser(name , imageUrl)
+      .then(()=>{
+        navigate("/")
+        setUser(newUser);
+        toast.success("Successfully Created Your Account" , {position:"top-center"})
+      })
+    })
+    .catch(err => {
+      err.message && toast.error("This email is already exists", {position:"top-center"})
+    })
 
   };
 
