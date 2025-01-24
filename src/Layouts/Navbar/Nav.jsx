@@ -10,6 +10,10 @@ const Nav = () => {
   const { user, userLogOut } = useAuth();
   const navigate = useNavigate()
 
+  const admin = true
+  const seller = false
+  // const user = false
+
   const handleLogout = () => {
     userLogOut()
     .then(()=> {
@@ -34,8 +38,8 @@ const Nav = () => {
   );
 
   return (
-    <nav className=" bg-blue-50/50 sticky top-0 z-50 backdrop-blur-xl lg:px-4">
-      <section className="container mx-auto navbar">
+    <nav className=" bg-blue-50/50 sticky top-0 z-50 backdrop-blur-xl">
+      <section className="container mx-auto navbar lg:px-6">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -56,7 +60,7 @@ const Nav = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm gap-2 dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow font-cinzel font-bold"
+            className="menu menu-sm gap-2 dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-4 pb-8 shadow font-cinzel font-bold"
           >
             {navList}
           </ul>
@@ -124,7 +128,7 @@ const Nav = () => {
                 <Link to={"#"}><FaUserGear /> Update Profile</Link>
               </li>
               <li>
-                <Link to={"/dashboard"}><FaClipboardList /> Dashboard</Link>
+                <Link to={admin && "/dashboard/home" || seller && "/dashboard/manage-medicine"}><FaClipboardList /> Dashboard</Link>
               </li>
               <li>
                 <Link onClick={handleLogout}><FaSignOutAlt /> Logout</Link>
