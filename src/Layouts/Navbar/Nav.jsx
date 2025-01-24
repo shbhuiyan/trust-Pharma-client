@@ -1,10 +1,27 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../Components/Hooks/AuthProviderHooks/useAuth";
+import { FaUserGear } from "react-icons/fa6";
+import { FaClipboardList, FaSignOutAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 const Nav = () => {
+  const { user, userLogOut } = useAuth();
+  const navigate = useNavigate()
 
-  const {user} = useAuth()
-console.log(user);
+  const handleLogout = () => {
+    userLogOut()
+    .then(()=> {
+      Swal.fire({
+        title: "Logout Successful",
+        icon: "success",
+        draggable: true
+      });
+      navigate("/")
+    })
+  }
+
   const navList = (
     <>
       <li>
@@ -12,9 +29,6 @@ console.log(user);
       </li>
       <li>
         <NavLink to={"/shop"}>Shop</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/dashboard"}>Dashboard</NavLink>
       </li>
     </>
   );
@@ -89,39 +103,41 @@ console.log(user);
             </div>
           </div>
         </div>
-        {
-          user && user?.email ? <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-12 rounded-full">
-              <img
-                alt={user?.displayName}
-                src={user?.photoURL}
-              />
+        {user && user?.email ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img alt={user?.displayName} src={user?.photoURL} data-tooltip-id="my-tooltip" data-tooltip-content={user?.displayName} data-tooltip-place="bottom" />
+                <Tooltip id="my-tooltip" style={{backgroundColor:"#2196F3" , color:"#000000"}}/>
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-56 p-4 shadow font-cinzel font-bold"
+            >
+              <li>
+                <Link to={"#"}><FaUserGear /> Update Profile</Link>
+              </li>
+              <li>
+                <Link to={"/dashboard"}><FaClipboardList /> Dashboard</Link>
+              </li>
+              <li>
+                <Link onClick={handleLogout}><FaSignOutAlt /> Logout</Link>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+        ) : (
+          <Link
+            to="/login"
+            className="px-2 md:px-4 py-1 md:py-2 font-inter font-semibold text-white bg-black rounded-lg hover:bg-black/80 transition-all"
           >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        </div> : <Link to="/login" className="px-2 md:px-4 py-1 md:py-2 font-inter font-semibold text-white bg-black rounded-lg hover:bg-black/80 transition-all">Join US</Link>
-        }
+            Join US
+          </Link>
+        )}
       </div>
     </nav>
   );

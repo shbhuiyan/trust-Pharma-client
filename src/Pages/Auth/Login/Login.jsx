@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const [hide, setHide] = useState(true);
-  const {loginUser , user , setUser} = useAuth()
+  const {loginUser , setUser} = useAuth()
   const navigate = useNavigate()
 
   const {
@@ -21,14 +21,13 @@ const Login = () => {
   const formSubmit = (formData) => {
     const email = formData.email;
     const password = formData.password
-console.log(email , password);
+
     loginUser(email , password)
     .then(result => {
       const oldUser = result.user
       setUser(oldUser);
-      console.log(oldUser);
       navigate("/")
-      toast.success(`Welcome Back ${user.displayName || "anonymous"}` , {position:"top-center"})
+      toast.success(`👋 Welcome Back ${oldUser?.displayName || "Anonymous"}` , {position:"top-center"})
     })
     .catch(err => {
       err.message && toast.error("Please Check Your Email and Password" , {position:"top-center"})
