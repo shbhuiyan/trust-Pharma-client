@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SectionTitle from "../../../Components/Shared/SectionTitle";
 import CategoryCard from "./CategoryCard";
 
+
 const Categories = () => {
     const [categories , setCategories] = useState([])
 
@@ -13,11 +14,13 @@ const Categories = () => {
     },[])
 
     return (
-        <div>
-            <SectionTitle heading="Discover medicines by categories and find exactly what you need!" subHeading="Explore Categories" />
+        <div className="px-4">
+            <SectionTitle heading="Exactly what you need discover by categories." subHeading="Explore Categories" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {
-            categories.map(category => <CategoryCard key={category?.categoryName} category={category} /> )
+            categories.map(category =><CategoryCard key={category?.categoryName} category={category} />)
         }
+        </div>
         </div>
     );
 };

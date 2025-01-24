@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-const CategoryCard = ({category}) => {
+const DiscountsCard = ({category}) => {
 
     const {categoryName , categoryImage , numberOfMedicines} = category;
 
 
   return (
-    <Link to="/shop" className="card bg-base-100 image-full h-60 shadow-xl p-4 border group">
+    <Link to="/shop" className="card bg-base-100 image-full h-96 w-96 shadow-xl">
       <figure>
         <img
-            className="w-full group-hover:scale-110 transition-all duration-300"
           src={categoryImage}
           alt={categoryName}
         />
@@ -25,4 +24,4 @@ const CategoryCard = ({category}) => {
   );
 };
 
-export default CategoryCard;
+export default DiscountsCard;

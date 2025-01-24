@@ -1,5 +1,6 @@
 import Banner from "../../Layouts/Home/Banner/Banner";
 import Categories from "../../Layouts/Home/Categories/Categories";
+import Discounts from "../../Layouts/Home/Discounts/Discounts";
 
 
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
     <div className="space-y-20">
       <Banner />
       <Categories />
+      <Discounts />
     </div>
   );
 };
