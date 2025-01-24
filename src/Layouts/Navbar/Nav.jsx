@@ -34,7 +34,8 @@ const Nav = () => {
   );
 
   return (
-    <nav className="navbar sticky top-0 z-10 backdrop-blur-xl bg-blue-50/50">
+    <nav className=" bg-blue-50/50 sticky top-0 z-50 backdrop-blur-xl lg:px-4">
+      <section className="container mx-auto navbar">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -139,6 +140,7 @@ const Nav = () => {
           </Link>
         )}
       </div>
+      </section>
     </nav>
   );
 };

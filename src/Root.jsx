@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Nav from "./Layouts/Navbar/Nav";
 import useAuth from "./Components/Hooks/AuthProviderHooks/useAuth";
 import Loading from "./Components/Loading";
+import Footer from "./Layouts/Footer/Footer";
 
 const Root = () => {
     const {loading} = useAuth()
@@ -10,9 +11,12 @@ const Root = () => {
         return <Loading />
     }
     return (
-        <div className="container mx-auto">
+        <div>
             <Nav /> 
+            <div className="container mx-auto">
             <Outlet />
+            </div>
+            <Footer />
         </div>
     );
 };
