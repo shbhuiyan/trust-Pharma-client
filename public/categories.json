@@ -1,0 +1,33 @@
+[
+    {
+      "categoryName": "Tablets",
+      "categoryImage": "https://i.ibb.co.com/xYNywYF/tablets-5620566-640.jpg",
+      "numberOfMedicines": 120
+    },
+    {
+      "categoryName": "Capsules",
+      "categoryImage": "https://i.ibb.co.com/FYX2nnD/capsule.jpg",
+      "numberOfMedicines": 12
+    },
+    {
+      "categoryName": "Syrups",
+      "categoryImage": "https://i.ibb.co.com/zJ8R11R/syrup.jpg",
+      "numberOfMedicines": 100
+    },
+    {
+      "categoryName": "Injections",
+      "categoryImage": "https://i.ibb.co.com/fNd161N/injection.jpg",
+      "numberOfMedicines": 80
+    },
+    {
+      "categoryName": "Ointments",
+      "categoryImage": "https://i.ibb.co.com/nBR2vHG/creame.jpg",
+      "numberOfMedicines": 90
+    },
+    {
+      "categoryName": "Drops",
+      "categoryImage": "https://i.ibb.co.com/jbct6qv/drops.jpg",
+      "numberOfMedicines": 50
+    }
+  ]
+  

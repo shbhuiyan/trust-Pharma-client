@@ -1,11 +1,14 @@
+import Banner from "../../Layouts/Home/Banner/Banner";
+import Categories from "../../Layouts/Home/Categories/Categories";
 
 
 const Home = () => {
 
 
   return (
-    <div className="navbar bg-base-100">
-      home
+    <div className="space-y-20">
+      <Banner />
+      <Categories />
     </div>
   );
 };
