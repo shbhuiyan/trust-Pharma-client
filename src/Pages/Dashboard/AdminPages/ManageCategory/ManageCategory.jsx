@@ -86,6 +86,7 @@ const ManageCategory = () => {
 
     const handleCategoryUpdate = async(e) => {
         e.preventDefault()
+        setLoading(true)
         const form = new FormData(e.target)
         
         const imageFile = form.get("image");
@@ -101,8 +102,22 @@ const ManageCategory = () => {
         const updateCategory = {categoryName , categoryImage}
         axiosSecure.put(`/category-update/${category._id}` , updateCategory )
         .then(res => {
-            console.log(res.data)
+            if(res.data.modifiedCount){
+                Swal.fire({
+                    title: "Successfully Updated!",
+                    text:"You Updated Category Item",
+                    icon: "success",
+                    draggable: true
+                  });
+                e.target.reset()
+                refetch()
+            }
         })
+
+        // after submitting modal close
+    const modal = document.getElementById("my_modal_update");
+    modal.close();
+    setLoading(false)
     }
 
 
@@ -249,6 +264,7 @@ const ManageCategory = () => {
                       </label>
                       <input
                           type="text"
+                          defaultValue={category?.categoryName}
                           name="categoryName"
                           placeholder="Category Name"
                           className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"

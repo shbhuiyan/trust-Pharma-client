@@ -19,7 +19,8 @@ const ManageUsers = () => {
         .then(res => {
             if(res.data.modifiedCount){
                 Swal.fire({
-                    title: "Successfully Updated User Role",
+                    title:"Successfully Updated",
+                    text: "You Updated User Role",
                     icon: "success",
                     draggable: true
                   });
