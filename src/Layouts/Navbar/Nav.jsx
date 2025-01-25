@@ -137,7 +137,7 @@ const Nav = () => {
                 <Link to={"#"}><FaUserGear /> Update Profile</Link>
               </li>
               <li>
-                <Link to={userRole==="admin" && "/dashboard/admin-home" || userRole==="seller" && "/dashboard/manage-medicine" || userRole==="customer" && "/dashboard/customer-payment-history"}><FaClipboardList /> Dashboard</Link>
+                <Link to={userRole==="admin" && "/dashboard/admin-home" || userRole==="seller" && "/dashboard/seller-home" || userRole==="customer" && "/dashboard/customer-payment-history"}><FaClipboardList /> Dashboard</Link>
               </li>
               <li>
                 <Link onClick={handleLogout}><FaSignOutAlt /> Logout</Link>

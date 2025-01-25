@@ -34,6 +34,7 @@ const Dashboard = () => {
     </>
 
     const sellerDashboard = <>
+    <li><NavLink to="/dashboard/seller-home" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaHome /> Seller Home</NavLink></li>
     <li><NavLink to="/dashboard/manage-medicine" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><AiFillMedicineBox /> Manage Medicines</NavLink></li>
     <li><NavLink to="/dashboard/payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdOutlinePayment /> Payment History</NavLink></li>
     <li><NavLink to="/dashboard/ask-for-ad" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaAd /> Ask For Advertise</NavLink></li>

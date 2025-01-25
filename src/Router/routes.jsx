@@ -15,6 +15,7 @@ import AskForAd from "../Pages/Dashboard/SellerPages/AskForAd/AskForAd";
 import PayHistory from "../Pages/Dashboard/SellerPages/PayHistory/PayHistory";
 import ManageMedicine from "../Pages/Dashboard/SellerPages/ManageMedicine/ManageMedicine";
 import PaymentHistory from "../Pages/Dashboard/UserPages/PaymentHistory/PaymentHistory";
+import SellerHome from "../Pages/Dashboard/SellerPages/SellerHome/SellerHome";
 
 
 
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
                 element:<Advertise />
             },
             // for seller routes
+            {
+                path:"/dashboard/seller-home",
+                element:<SellerHome />
+            },
             {
                 path:"/dashboard/manage-medicine",
                 element:<ManageMedicine />
