@@ -11,16 +11,16 @@ import 'swiper/css/pagination';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 import "./Discounts.css"
 import DiscountsCard from "./DiscountsCard";
+import useMedicine from "../../../Components/Hooks/Medicines/useMedicine";
 
 const Discounts = () => {
-    const [categories , setCategories] = useState([])
-
+    const [discountItems , setDiscountItems] = useState([])
+    const {medicines , refetch} = useMedicine()
 
     useEffect(() => {
-        fetch("/categories.json")
-        .then(res => res.json())
-        .then(data => setCategories(data))
-    },[])
+        setDiscountItems(medicines.filter(medicine => medicine?.discount));
+        refetch()
+    },[medicines, refetch])
 
     return (
         <div className="px-4">
@@ -42,8 +42,8 @@ const Discounts = () => {
         className="mySwiper px-4 max-w-6xl"
         >
         {
-            categories.map(category => <SwiperSlide className="w-96" key={category?.categoryName}>
-                <DiscountsCard category={category} />
+            discountItems.map(item => <SwiperSlide className="w-96" key={item._id}>
+                <DiscountsCard medicine={item} />
             </SwiperSlide> )
         }
         </Swiper>
