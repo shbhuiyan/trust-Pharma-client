@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const [hide, setHide] = useState(true);
-  const {loginUser , setUser , loading} = useAuth()
+  const {loginUser , setUser , setLoading, loading} = useAuth()
   const navigate = useNavigate()
 
   const {
@@ -31,6 +31,7 @@ const Login = () => {
     })
     .catch(err => {
       err.message && toast.error("Please Check Your Email and Password" , {position:"top-center"})
+      setLoading(false)
     })
 
   };

@@ -14,10 +14,11 @@ const GoogleButton = () => {
     loginWithGoogle(googleProvider)
     .then(result => {
       const user = result.user
+      console.log(user);
       const userData = {
         name:user?.displayName,
         email:user?.email,
-        image:user?.photoUrl,
+        image:user?.photoURL,
         role:"customer"
       }
       axiosPublic.post('/users' , userData)

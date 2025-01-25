@@ -1,6 +1,6 @@
-import { FaAd, FaChartPie, FaHome, FaUsersCog } from "react-icons/fa";
+import { FaAd, FaChartPie, FaHome, FaSignOutAlt, FaUsersCog } from "react-icons/fa";
 import { MdCategory, MdOutlinePayment } from "react-icons/md";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import './Dashboard.css'
 import { IoHomeOutline } from "react-icons/io5";
 import { FaShop } from "react-icons/fa6";
@@ -9,11 +9,13 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
 import useAuth from "../../Components/Hooks/AuthProviderHooks/useAuth";
 import Loading from "../../Components/Loading";
+import Swal from "sweetalert2";
 
 const Dashboard = () => {
-    const {user , loading} = useAuth()
+    const {user , loading , userLogOut} = useAuth()
     const axiosSecure = useAxiosSecure()
     const [userRoleCheck , setUserRoleCheck] = useState({})
+    const navigate = useNavigate()
 
     useEffect(() => {
         axiosSecure.get(`/users/${user?.email}`)
@@ -41,6 +43,18 @@ const Dashboard = () => {
     <li><NavLink to="/dashboard/customer-payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdOutlinePayment /> Payment History</NavLink></li>
     </>
 
+    const handleLogout = () => {
+        userLogOut()
+        .then(()=> {
+          Swal.fire({
+            title: "Logout Successful",
+            icon: "success",
+            draggable: true
+          });
+          navigate("/")
+        })
+      }
+
 
 
     if(loading){
@@ -67,6 +81,9 @@ const Dashboard = () => {
             <ul className="text-xl font-medium py-4">
             <li><Link to="/" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><IoHomeOutline /> Home</Link></li>
             <li><Link to="/shop" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaShop /> Shop</Link></li>
+            <li>
+              <Link className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white" onClick={handleLogout}><FaSignOutAlt /> Logout</Link>
+            </li>
             </ul>
             </aside>
 
