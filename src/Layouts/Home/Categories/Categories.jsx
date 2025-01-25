@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import SectionTitle from "../../../Components/Shared/SectionTitle";
 import CategoryCard from "./CategoryCard";
+import useAxiosPublic from "../../../Components/Hooks/Axios/AxiosPublic/useAxiosPublic";
 
 
 const Categories = () => {
     const [categories , setCategories] = useState([])
-
+    const axiosPublic = useAxiosPublic()
 
     useEffect(() => {
-        fetch("/categories.json")
-        .then(res => res.json())
-        .then(data => setCategories(data))
-    },[])
+        axiosPublic.get('/categories')
+        .then(res => setCategories(res.data))
+
+    },[axiosPublic])
 
     return (
         <div className="px-4">

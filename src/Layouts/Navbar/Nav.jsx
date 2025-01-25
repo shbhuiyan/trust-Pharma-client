@@ -5,14 +5,23 @@ import { FaClipboardList, FaSignOutAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
+import useAxiosSecure from "../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
+import { useEffect, useState } from "react";
 
 const Nav = () => {
   const { user, userLogOut } = useAuth();
   const navigate = useNavigate()
+  const axiosSecure = useAxiosSecure()
+    const [userRole , setUserRole] = useState("")
+// console.log(userRole);
 
-  const admin = true
-  const seller = false
-  // const user = false
+    useEffect(() => {
+        axiosSecure.get(`/users/${user?.email}`)
+        .then(res => {
+            setUserRole(res.data?.role)
+            // console.log(res.data.role);
+        })
+    },[axiosSecure, user?.email])
 
   const handleLogout = () => {
     userLogOut()
@@ -128,7 +137,7 @@ const Nav = () => {
                 <Link to={"#"}><FaUserGear /> Update Profile</Link>
               </li>
               <li>
-                <Link to={admin && "/dashboard/home" || seller && "/dashboard/manage-medicine"}><FaClipboardList /> Dashboard</Link>
+                <Link to={userRole==="admin" && "/dashboard/admin-home" || userRole==="seller" && "/dashboard/manage-medicine" || userRole==="customer" && "/dashboard/customer-payment-history"}><FaClipboardList /> Dashboard</Link>
               </li>
               <li>
                 <Link onClick={handleLogout}><FaSignOutAlt /> Logout</Link>

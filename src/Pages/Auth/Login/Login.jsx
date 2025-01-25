@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const [hide, setHide] = useState(true);
-  const {loginUser , setUser} = useAuth()
+  const {loginUser , setUser , loading} = useAuth()
   const navigate = useNavigate()
 
   const {
@@ -80,9 +80,13 @@ const Login = () => {
               Password is required
             </span>
           )}
-          <button className="w-full py-2 bg-blue-500 text-white rounded transition-all font-semibold hover:bg-blue-600">
+          {
+            loading ? <button disabled className="w-full py-2 bg-blue-500 transition-all font-semibold text-white rounded">
+            <span className="loading loading-spinner loading-sm"></span>
+          </button> : <button className="w-full py-2 bg-blue-500 transition-all font-semibold text-white rounded hover:bg-blue-600">
             Login
           </button>
+          }
         </form>
         <p className="font-semibold  text-center my-4">
           Don&#39;t have an account yet?{" "}

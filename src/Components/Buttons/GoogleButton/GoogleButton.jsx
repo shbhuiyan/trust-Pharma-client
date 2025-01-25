@@ -2,16 +2,25 @@ import { GoogleAuthProvider } from "firebase/auth";
 import useAuth from "../../Hooks/AuthProviderHooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../Hooks/Axios/AxiosPublic/useAxiosPublic";
 
 const GoogleButton = () => {
   const {loginWithGoogle , setUser} = useAuth()
   const navigate = useNavigate()
+  const axiosPublic = useAxiosPublic()
 
   const googleProvider = new GoogleAuthProvider()
   const handleGoogleLogin = () => {
     loginWithGoogle(googleProvider)
     .then(result => {
       const user = result.user
+      const userData = {
+        name:user?.displayName,
+        email:user?.email,
+        image:user?.photoUrl,
+        role:"customer"
+      }
+      axiosPublic.post('/users' , userData)
       setUser(user);
       navigate("/")
       toast.success("Your'r LogIn Successfully" , {position:"top-center"})

@@ -75,9 +75,9 @@ const router = createBrowserRouter([
                 path:"/dashboard/ask-for-ad",
                 element:<AskForAd />
             },
-            // for user routes
+            // for customer routes
             {
-                path:"/dashboard/user-payment-history",
+                path:"/dashboard/customer-payment-history",
                 element:<PaymentHistory />
             },
         ]

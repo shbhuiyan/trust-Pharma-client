@@ -5,12 +5,22 @@ import './Dashboard.css'
 import { IoHomeOutline } from "react-icons/io5";
 import { FaShop } from "react-icons/fa6";
 import { AiFillMedicineBox } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
+import useAuth from "../../Components/Hooks/AuthProviderHooks/useAuth";
+import Loading from "../../Components/Loading";
 
 const Dashboard = () => {
+    const {user , loading} = useAuth()
+    const axiosSecure = useAxiosSecure()
+    const [userRoleCheck , setUserRoleCheck] = useState({})
 
-    const admin = true
-    const seller = false
-    const user = false
+    useEffect(() => {
+        axiosSecure.get(`/users/${user?.email}`)
+        .then(res => {
+            setUserRoleCheck(res.data)
+        })
+    },[axiosSecure, user?.email])
 
     const adminDashboard = <>
     <li><NavLink to="/dashboard/admin-home" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaHome /> Admin Home</NavLink></li>
@@ -27,16 +37,31 @@ const Dashboard = () => {
     <li><NavLink to="/dashboard/ask-for-ad" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaAd /> Ask For Advertise</NavLink></li>
     </>
 
-    const userDashboard = <>
-    <li><NavLink to="/dashboard/user-payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdOutlinePayment /> Payment History</NavLink></li>
+    const customerDashboard = <>
+    <li><NavLink to="/dashboard/customer-payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdOutlinePayment /> Payment History</NavLink></li>
     </>
 
+
+
+    if(loading){
+        return <Loading />
+    }
     return (
         <section className="container mx-auto min-h-screen flex gap-10">
             {/* left side */}
             <aside className="w-3/12 bg-blue-400">
+            <div className="flex items-center p-4 gap-2">
+            <div className="w-16">
+                <img className="rounded-md" src={userRoleCheck.image} alt={userRoleCheck.name} />
+            </div>
+            <div className="">
+            <h1 className="text-2xl font-semibold">{userRoleCheck.name}</h1>
+            <p className="text-lg font-semibold">{userRoleCheck.email}</p>
+            </div>
+            </div>
+            <div className="divider"></div>
             <ul id="dashboard" className="text-xl font-medium py-4">
-               {admin && adminDashboard || seller && sellerDashboard || user && userDashboard}
+               {userRoleCheck?.role==="admin" && adminDashboard || userRoleCheck?.role==="seller" && sellerDashboard || userRoleCheck?.role==="customer" && customerDashboard}
             </ul>
             <div className="divider"></div>
             <ul className="text-xl font-medium py-4">

@@ -8,13 +8,15 @@ import { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../Components/Hooks/AuthProviderHooks/useAuth";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../../Components/Hooks/Axios/AxiosPublic/useAxiosPublic";
 
 
 
 const Register = () => {
   const [hide, setHide] = useState(true);
-  const {createNewUser , setUser , updateUser} = useAuth()
+  const {createNewUser , setUser , updateUser , loading} = useAuth()
   const navigate = useNavigate()
+  const axiosPublic = useAxiosPublic()
 
   const imgBBApiKey = import.meta.env.VITE_ImgBB_API_KEY
 
@@ -36,16 +38,24 @@ const Register = () => {
     const email = formData.email;
     const name = formData.name
     const password = formData.password
-    // const role = formData.role
+    const role = formData.role
+
+    const userData = {email , name , role , image:imageUrl}
+    // console.log(userData);
 
     createNewUser(email , password)
     .then( result => {
       const newUser = result.user
       updateUser(name , imageUrl)
       .then(()=>{
-        navigate("/")
-        setUser(newUser);
-        toast.success("Successfully Created Your Account" , {position:"top-center"})
+        axiosPublic.post('/users' , userData)
+        .then(res => {
+          if(res.data.insertedId){
+            navigate("/")
+            setUser(newUser);
+            toast.success("Successfully Created Your Account" , {position:"top-center"})
+          }
+        })
       })
     })
     .catch(err => {
@@ -146,7 +156,7 @@ const Register = () => {
             <option disabled value="">
               Select Your Role
             </option>
-            <option value="user">user</option>
+            <option value="customer">customer</option>
             <option value="seller">seller</option>
           </select>
           {errors.role?.type === "required" && (
@@ -154,9 +164,13 @@ const Register = () => {
               Password is required
             </span>
           )}
-          <button className="w-full py-2 bg-blue-500 transition-all font-semibold text-white rounded hover:bg-blue-600">
+          {
+            loading ? <button disabled className="w-full py-2 bg-blue-500 transition-all font-semibold text-white rounded">
+            <span className="loading loading-spinner loading-sm"></span>
+          </button> : <button className="w-full py-2 bg-blue-500 transition-all font-semibold text-white rounded hover:bg-blue-600">
             Register
           </button>
+          }
         </form>
         <p className="font-semibold  text-center my-4">
           If you already have an account{" "}
