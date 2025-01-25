@@ -18,7 +18,7 @@ const useMedicine = () => {
         }
     })
 
-    return {medicines , refetch}
+    return {medicines , refetch , user}
 };
 
 

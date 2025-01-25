@@ -1,12 +1,73 @@
+import { toast } from "react-toastify";
 import useMedicine from "../../../../Components/Hooks/Medicines/useMedicine";
+import { useState } from "react";
+import axios from "axios";
+import useAxiosSecure from "../../../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const ManageMedicine = () => {
-    const {medicines , refetch} = useMedicine()
+    const {medicines , refetch , user} = useMedicine()
+    const [loading, setLoading] = useState(false);
+    const axiosSecure = useAxiosSecure()
+    const imgBBApiKey = import.meta.env.VITE_ImgBB_API_KEY;
+
+    const handleAddMedicine = async(e) => {
+        e.preventDefault()
+        setLoading(true)
+        const form = new FormData(e.target)
+
+        const medicineName = form.get("medicineName");
+        const drugImage = form.get("medicineImage");
+        const genericName = form.get("genericName");
+        const description = form.get("description");
+        const category = form.get("category");
+        const company = form.get("company");
+        const unit = form.get("unit");
+        const discount = form.get("discount");
+        const price = form.get("price");
+        const email = user?.email;
+
+        if(price < 1 || discount < 0){
+                const modal = document.getElementById("my_modal_add_medicine")
+                modal.close();
+                toast.error("Sorry! Price & Discount Allow Only Positive Value",{position:"top-center"})
+                setLoading(false);
+                return
+        }
+        const img = { image: drugImage };
+        const res = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${imgBBApiKey}`,
+          img,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
+        const medicineImage = res.data.data.display_url;
+
+        const newMedicine = {medicineName , medicineImage , genericName , description , category , company , unit , discount , price , email};
+
+        const {data} = await axiosSecure.post('/medicines' , newMedicine)
+            if(data.insertedId){
+                Swal.fire({
+                    title: "Successfully Added!",
+                    text: "You Added A New Medicine",
+                    icon: "success",
+                    draggable: true,
+                  });
+                  e.target.reset();
+                  refetch();
+            }
+        const modal = document.getElementById("my_modal_add_medicine")
+        modal.close();
+        setLoading(false);
+    }
 
     return (
         <section className="my-10">
             <div className="flex max-md:flex-col justify-evenly items-center">
-            <h1 className="text-4xl font-bold text-blue-500 text-center">Total Number Of Users : 00</h1>
+            <h1 className="text-4xl font-bold text-blue-500 text-center">Total Number Of Medicine : {medicines.length} </h1>
             <button
                 className="btn btn-outline btn-info text-base"
                 onClick={() => document.getElementById("my_modal_add_medicine").showModal()}
@@ -79,8 +140,8 @@ const ManageMedicine = () => {
                   <h2 className="text-2xl font-bold text-center mb-4">
                     Add New Medicine
                   </h2>
-                <form className="max-w-lg mx-auto p-6 rounded-2xl">
-                  {/* Item Name */}
+                <form onSubmit={handleAddMedicine} className="max-w-lg mx-auto p-6 rounded-2xl">
+                  {/* Medicine Name */}
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="itemName">
                       Medicine Name<span className="text-red-600">*</span>
@@ -95,7 +156,7 @@ const ManageMedicine = () => {
                     />
                   </div>
 
-                  {/* Item Generic Name */}
+                  {/* Generic Name */}
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="itemGenericName">
                       Generic Name<span className="text-red-600">*</span>
@@ -103,6 +164,7 @@ const ManageMedicine = () => {
                     <input
                       type="text"
                       id="genericName"
+                      required
                       name="genericName"
                       placeholder="Generic name"
                       className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
@@ -115,8 +177,9 @@ const ManageMedicine = () => {
                       Short Description<span className="text-red-600">*</span>
                     </label>
                     <textarea
-                      id="shortDescription"
-                      name="shortDescription"
+                      id="description"
+                      required
+                      name="description"
                       placeholder="Short Description"
                       className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
                     ></textarea>
@@ -129,8 +192,9 @@ const ManageMedicine = () => {
                     </label>
                     <input
                       type="file"
-                      id="image"
-                      name="image"
+                      required
+                      id="medicineImage"
+                      name="medicineImage"
                       className="w-full file-input file-input-bordered focus:outline-none"
                     />
                   </div>
@@ -142,7 +206,9 @@ const ManageMedicine = () => {
                     </label>
                     <select
                       id="category"
+                      required
                       name="category"
+                      defaultValue=""
                       className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
                     >
                       <option disabled value="">Select a category</option>
@@ -159,7 +225,9 @@ const ManageMedicine = () => {
                     </label>
                     <select
                       id="company"
+                      required
                       name="company"
+                      defaultValue=""
                       className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
                     >
                       <option disabled value="">Select a company</option>
@@ -169,13 +237,15 @@ const ManageMedicine = () => {
                     </select>
                   </div>
 
-                  {/* Item Mass Unit */}
+                  {/* Mass Unit */}
                   <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="massUnit">
                       Item Mass Unit (Mg or ML)<span className="text-red-600">*</span>
                     </label>
                     <select
                       id="unit"
+                      required
+                      defaultValue=""
                       name="unit"
                       className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
                     >
@@ -192,8 +262,9 @@ const ManageMedicine = () => {
                     </label>
                     <input
                       type="number"
-                      id="unitPrice"
-                      name="unitPrice"
+                      id="price"
+                      required
+                      name="price"
                       placeholder="Allow Only Positive Value"
                       className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
                     />
@@ -206,6 +277,7 @@ const ManageMedicine = () => {
                     </label>
                     <input
                       type="number"
+                      required
                       id="discount"
                       name="discount"
                       placeholder="Allow Only Positive Value"
@@ -215,12 +287,21 @@ const ManageMedicine = () => {
                   </div>
 
                   {/* Submit Button */}
+                  {loading ? (
+                  <button
+                    disabled
+                    className="px-6 py-2 w-full bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"
+                  >
+                    <span className="loading loading-spinner loading-sm"></span>
+                  </button>
+                ) : (
                   <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                    className="px-6 py-2 w-full bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"
                   >
-                    Submit
+                    Update Category
                   </button>
+                )}
                 </form>
                 </section>
               </div>
