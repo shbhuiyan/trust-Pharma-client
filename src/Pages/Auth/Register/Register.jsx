@@ -83,7 +83,7 @@ const Register = () => {
               className="w-full file-input file-input-bordered focus:outline-none"
             />
           </div>
-          {errors.name && (
+          {errors.imgFile && (
             <span className="text-red-500 text-sm font-medium">
               Your Image is required
             </span>
