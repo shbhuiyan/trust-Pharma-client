@@ -11,16 +11,15 @@ import 'swiper/css/pagination';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 import "./Discounts.css"
 import DiscountsCard from "./DiscountsCard";
-import useMedicine from "../../../Components/Hooks/Medicines/useMedicine";
+import useAllMedicines from "../../../Components/Hooks/GetAllMedicines/useAllMedicines";
 
 const Discounts = () => {
     const [discountItems , setDiscountItems] = useState([])
-    const {medicines , refetch} = useMedicine()
+    const {medicines} = useAllMedicines()
 
     useEffect(() => {
         setDiscountItems(medicines.filter(medicine => medicine?.discount));
-        refetch()
-    },[medicines, refetch])
+    },[medicines])
 
     return (
         <div className="px-4">

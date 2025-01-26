@@ -212,9 +212,12 @@ const ManageMedicine = () => {
                       className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
                     >
                       <option disabled value="">Select a category</option>
-                      <option value="category1">Category 1</option>
-                      <option value="category2">Category 2</option>
-                      <option value="category3">Category 3</option>
+                      <option value="Capsules">Capsules</option>
+                      <option value="Tablets">Tablets</option>
+                      <option value="Syrup">Syrup</option>
+                      <option value="Injections">Injections</option>
+                      <option value="Ointments">Ointments</option>
+                      <option value="Drops">Drops</option>
                     </select>
                   </div>
 
