@@ -7,13 +7,20 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import useAxiosSecure from "../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
 import { useEffect, useState } from "react";
+import useCart from "../../Components/Hooks/Cart/useCart";
 
 const Nav = () => {
   const { user, userLogOut } = useAuth();
   const navigate = useNavigate()
   const axiosSecure = useAxiosSecure()
     const [userRole , setUserRole] = useState("")
-// console.log(userRole);
+    const [totalPrice , setTotalPrice] = useState(0)
+console.log(totalPrice);
+  const {carts} = useCart()
+
+//   const total = carts.reduce((total, item) => {
+//     return total + item.price * item.quantity;
+// }, 0);
 
     useEffect(() => {
         axiosSecure.get(`/users/${user?.email}`)
@@ -21,7 +28,10 @@ const Nav = () => {
             setUserRole(res.data?.role)
             // console.log(res.data.role);
         })
-    },[axiosSecure, user?.email])
+
+    const total = carts.reduce((prev, item) => prev + item.perUnitPrice, 0);
+        setTotalPrice(total);
+    },[axiosSecure, carts, user?.email])
 
   const handleLogout = () => {
     userLogOut()
@@ -101,7 +111,7 @@ const Nav = () => {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span className="badge badge-sm indicator-item">8</span>
+              <span className="badge badge-sm indicator-item text-base text-blue-500">{carts.length}</span>
             </div>
           </div>
           <div
@@ -109,10 +119,10 @@ const Nav = () => {
             className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
           >
             <div className="card-body">
-              <span className="text-lg font-bold">8 Items</span>
-              <span className="text-info">Subtotal: $999</span>
+              <span className="text-lg font-bold">{carts.length} Items</span>
+              <span className="text-info text-base">Total Price: ${totalPrice}</span>
               <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+                <button className="btn btn-neutral btn-block">View cart</button>
               </div>
             </div>
           </div>

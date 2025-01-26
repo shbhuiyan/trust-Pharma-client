@@ -1,7 +1,14 @@
 import { FaEye, FaShoppingCart } from "react-icons/fa";
+import useAuth from "../../../Components/Hooks/AuthProviderHooks/useAuth";
+import useAxiosSecure from "../../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
+import Swal from "sweetalert2";
+import useCart from "../../../Components/Hooks/Cart/useCart";
 
 /* eslint-disable react/prop-types */
 const DiscountsCard = ({ medicine }) => {
+  const{refetch} = useCart()
+  const {user} = useAuth()
+    const axiosSecure = useAxiosSecure()
   const {
     medicineName,
     medicineImage,
@@ -14,6 +21,41 @@ const DiscountsCard = ({ medicine }) => {
     unit,
     _id
   } = medicine;
+
+
+  const handleAddToCart = () => {
+        const cartItem = {
+          cartItemName:medicine.medicineName,
+          cartItemCompany:medicine.company,
+          cartItemCategory:medicine.category,
+          perUnitPrice:medicine.price,
+          cartItemQuantity:1,
+          userEmail: user?.email,
+          userName: user?.displayName,
+        }
+        
+        axiosSecure.post('/cart-items', cartItem)
+        .then(res => {
+          if(res.data.insertedId){
+            Swal.fire({
+                title: "Added To Cart!",
+                text: "You added a item to cart",
+                icon: "success",
+                draggable: true,
+              });
+            refetch()
+          }
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.message,
+          });
+        })
+        const modal = document.getElementById(medicine._id)
+        modal.close();
+      }
 
   return (
     <section>
@@ -35,7 +77,7 @@ const DiscountsCard = ({ medicine }) => {
           <p>Unit: <span className="font-semibold">{unit}</span></p>
         </div>
         <div className="flex justify-between items-center">
-        <button className="btn btn-outline btn-neutral mt-4">Add to Cart <FaShoppingCart className="text-xl"/></button>
+        <button onClick={handleAddToCart} className="btn btn-outline btn-neutral mt-4">Add to Cart <FaShoppingCart className="text-xl"/></button>
         <button onClick={() => document.getElementById(_id).showModal()} className="btn btn-outline btn-info mt-4">View <FaEye className="text-xl"/></button>
         </div>
       </div>
@@ -72,7 +114,7 @@ const DiscountsCard = ({ medicine }) => {
           <p>Unit: <span className="font-semibold">{unit}</span></p>
         </div>
               <div className="card-actions justify-between">
-                <button className="btn btn-outline btn-neutral">Add to Cart <FaShoppingCart className="text-xl"/></button>
+                <button onClick={handleAddToCart} className="btn btn-outline btn-neutral">Add to Cart <FaShoppingCart className="text-xl"/></button>
                 <button onClick={()=>document.getElementById(_id).close()} className="btn btn-outline btn-error">Cancel</button>
               </div>
             </div>
