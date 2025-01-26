@@ -18,7 +18,8 @@ const Discounts = () => {
     const {medicines} = useAllMedicines()
 
     useEffect(() => {
-        setDiscountItems(medicines.filter(medicine => medicine?.discount));
+        const discount = medicines.filter(medicine => medicine?.discount);
+        setDiscountItems(discount);
     },[medicines])
 
     return (

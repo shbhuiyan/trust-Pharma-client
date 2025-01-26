@@ -14,7 +14,7 @@ const GoogleButton = () => {
     loginWithGoogle(googleProvider)
     .then(result => {
       const user = result.user
-      console.log(user);
+
       const userData = {
         name:user?.displayName,
         email:user?.email,

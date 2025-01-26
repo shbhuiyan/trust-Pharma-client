@@ -16,6 +16,7 @@ const Shop = () => {
     const handleAddToCart = (medicine) => {
       const cartItem = {
         cartItemName:medicine.medicineName,
+        cartItemImage:medicine.medicineImage,
         cartItemCompany:medicine.company,
         cartItemCategory:medicine.category,
         perUnitPrice:medicine.price,
@@ -49,7 +50,7 @@ const Shop = () => {
     }
 
     return (
-        <section className="mb-20">
+        <section className="mb-20 min-h-screen">
             <div className="flex max-md:flex-col-reverse justify-center items-center">
               <Lottie className="max-w-96" animationData={shopBanner} loop={true} autoplay={true} />
               <h3 className="max-w-xl text-center text-3xl font-bold text-blue-500 capitalize">Browse all available medicines, view detailed information, and add items to your cart with ease.</h3>

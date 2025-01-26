@@ -15,7 +15,7 @@ const Nav = () => {
   const axiosSecure = useAxiosSecure()
     const [userRole , setUserRole] = useState("")
     const [totalPrice , setTotalPrice] = useState(0)
-console.log(totalPrice);
+
   const {carts} = useCart()
 
 //   const total = carts.reduce((total, item) => {
@@ -122,7 +122,7 @@ console.log(totalPrice);
               <span className="text-lg font-bold">{carts.length} Items</span>
               <span className="text-info text-base">Total Price: ${totalPrice}</span>
               <div className="card-actions">
-                <button className="btn btn-neutral btn-block">View cart</button>
+                <Link to="/view-cart" className="btn btn-neutral btn-block">View cart</Link>
               </div>
             </div>
           </div>

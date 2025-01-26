@@ -1,20 +1,10 @@
-import { FadeLoader } from "react-spinners";
+import Lottie from "lottie-react";
+import loadingAnimation from "../../public/Pharma-Loading.json";
 
 const Loading = () => {
     return (
         <div className="my-40">
-            <FadeLoader
-        color="#2196F3"
-        loading={true}
-        cssOverride={{
-            display: "block",
-            margin: "0 auto",
-            borderColor: "red",
-          }}
-        size={150}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
+            <Lottie className="max-w-5xl mx-auto" animationData={loadingAnimation} loop={true} autoplay={true} />
         </div>
     );
 };

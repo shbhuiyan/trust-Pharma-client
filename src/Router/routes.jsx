@@ -16,6 +16,7 @@ import PayHistory from "../Pages/Dashboard/SellerPages/PayHistory/PayHistory";
 import ManageMedicine from "../Pages/Dashboard/SellerPages/ManageMedicine/ManageMedicine";
 import PaymentHistory from "../Pages/Dashboard/UserPages/PaymentHistory/PaymentHistory";
 import SellerHome from "../Pages/Dashboard/SellerPages/SellerHome/SellerHome";
+import ViewCart from "../Pages/Extra/ViewCart/ViewCart";
 
 
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path:"/shop",
                 element:<Shop />
+            },
+            {
+                path:"/view-cart",
+                element:<ViewCart />
             },
         ]
     },
