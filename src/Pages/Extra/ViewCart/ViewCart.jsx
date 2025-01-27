@@ -73,7 +73,7 @@ const ViewCart = () => {
           autoplay={true}
         />
         <h3 className="max-w-xl text-center text-3xl mb-5 font-bold text-blue-500 capitalize">
-          Your selected items are just a click away from being yours.
+          Your selected items are just few click away from being yours.
         </h3>
       </div>
 
