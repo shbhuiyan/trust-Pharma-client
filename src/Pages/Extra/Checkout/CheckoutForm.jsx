@@ -14,11 +14,12 @@ const CheckoutForm = () => {
     const totalPrice = carts.reduce((prev, item) => prev + item.perUnitPrice, 0);
 
     useEffect(() => {
-        axiosSecure.post('/create-payment-intent' , {totalPrice})
-        .then(res => {
-            console.log(res.data);
+        if(totalPrice > 0){
+            axiosSecure.post('/create-payment-intent' , {totalPrice})
+            .then(res => {
             setClientSecret(res.data.clientSecret);
         })
+        }
     },[axiosSecure, totalPrice])
 
     const handleSubmit = async(e) => {
@@ -34,7 +35,7 @@ const CheckoutForm = () => {
             return;
         }
 
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
+        const {error} = await stripe.createPaymentMethod({
             type: 'card',
             card,
           });
@@ -42,7 +43,7 @@ const CheckoutForm = () => {
           if (error) {
             toast.error(error.message , {position:"top-center"});
     } else {
-      console.log('[PaymentMethod]', paymentMethod);
+    //   console.log('[PaymentMethod]', paymentMethod);
     }
 
     // Confirm Card Payments
@@ -69,8 +70,8 @@ const CheckoutForm = () => {
     }
   
     return (
-        <div className="mx-auto p-4 w-full">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Complete Your Payment</h2>
+        <div className="mx-auto p-4 md:w-1/2">
+        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">Complete Your Payment</h2>
         <form onSubmit={handleSubmit}>
           <div className="p-4 bg-white border border-gray-300 rounded-md">
             <CardElement

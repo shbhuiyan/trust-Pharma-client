@@ -64,7 +64,7 @@ const ViewCart = () => {
   }
 
   return (
-    <section className={carts.length < 1 && "min-h-screen"}>
+    <section className={carts.length || "min-h-screen"}>
       <div className="flex max-md:flex-col-reverse justify-center items-end">
         <Lottie
           className="max-w-64"
@@ -80,7 +80,7 @@ const ViewCart = () => {
       <div className="overflow-x-auto my-20">
         <table className="table">
           {/* head */}
-          <thead>
+          <thead className="text-base">
             <tr>
               <th>#</th>
               <th>Medicine Image</th>

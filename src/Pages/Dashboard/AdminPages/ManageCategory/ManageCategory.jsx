@@ -140,7 +140,7 @@ const ManageCategory = () => {
       <div className="overflow-x-auto my-10">
         <table className="table">
           {/* head */}
-          <thead>
+          <thead className="text-base">
             <tr>
               <th>#</th>
               <th>Category Image</th>
