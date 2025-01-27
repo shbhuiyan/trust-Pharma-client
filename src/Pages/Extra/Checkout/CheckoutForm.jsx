@@ -10,9 +10,7 @@ import { useNavigate } from "react-router-dom";
 const CheckoutForm = () => {
     const stripe = useStripe();
     const [clientSecret , setClientSecret] = useState("")
-    const [transactionId , setTransactionId] = useState("")
     const [loading , setLoading] = useState(false)
-    const [amount , setAmount] = useState(0)
     const navigate = useNavigate()
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
@@ -54,7 +52,7 @@ const CheckoutForm = () => {
     }
 
     // Confirm Card Payments
-    stripe.confirmCardPayment(clientSecret, {
+    const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
           billing_details: {
@@ -63,23 +61,21 @@ const CheckoutForm = () => {
           },
         },
       })
-      .then(result => {
+      
         const paymentIntent = result.paymentIntent;
         if(paymentIntent.status === "succeeded"){
-            setTransactionId(paymentIntent.id)
-            setAmount(parseInt(paymentIntent.amount / 100));
-          }
-      })
       
       // handle after payment
       const paymentInfo = {
         customerName: user?.displayName,
         customerEmail: user?.email,
-        transactionId,
-        amount,
+        transactionId:paymentIntent.id,
+        amount:parseInt(paymentIntent.amount / 100),
         allCartsId,
         time:moment().format('Do MMM YYYY, h:mm a'),
+        status:"pending"
       }
+      console.log(paymentInfo);
 
       const {data} = await axiosSecure.post('/payments', paymentInfo)
         if(data.insertedId){
@@ -93,7 +89,7 @@ const CheckoutForm = () => {
                 });
             navigate('/')
           }
-        }
+        }}
         setLoading(false)
     }
 
