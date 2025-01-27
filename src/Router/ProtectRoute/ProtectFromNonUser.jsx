@@ -3,9 +3,9 @@ import Loading from "../../Components/Loading";
 import useAuth from "../../Components/Hooks/AuthProviderHooks/useAuth";
 
 // eslint-disable-next-line react/prop-types
-const ProtectNonUser = ({ children }) => {
+const ProtectFromNonUser = ({ children }) => {
     const location = useLocation();
-    const { user, loading } = useAuth;
+    const { user, loading } = useAuth();
   
     if (loading) {
       return <Loading/>;
@@ -16,4 +16,4 @@ const ProtectNonUser = ({ children }) => {
     return <Navigate state={location.pathname} to="/login" />;
   };
 
-export default ProtectNonUser;
+export default ProtectFromNonUser;

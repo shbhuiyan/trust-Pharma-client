@@ -18,8 +18,9 @@ import PaymentHistory from "../Pages/Dashboard/UserPages/PaymentHistory/PaymentH
 import SellerHome from "../Pages/Dashboard/SellerPages/SellerHome/SellerHome";
 import ViewCart from "../Pages/Extra/ViewCart/ViewCart";
 import Checkout from "../Pages/Extra/Checkout/Checkout";
-import ProtectNonUser from "./ProtectRoute/ProtectNonUser";
 import ErrorPage from "../Pages/Error/ErrorPage";
+import ProtectFromNonUser from "./ProtectRoute/ProtectFromNonUser";
+import ProtectFromUser from "./ProtectRoute/ProtectFromUser";
 
 
 
@@ -39,74 +40,74 @@ const router = createBrowserRouter([
             },
             {
                 path:"/view-cart",
-                element:<ProtectNonUser><ViewCart /></ProtectNonUser>
+                element:<ProtectFromNonUser><ViewCart /></ProtectFromNonUser>
             },
             {
                 path:"/view-cart/checkout",
-                element:<ProtectNonUser><Checkout /></ProtectNonUser>
+                element:<ProtectFromNonUser><Checkout /></ProtectFromNonUser>
             },
         ]
     },
     {
         path:"/dashboard",
-        element:<ProtectNonUser><Dashboard /></ProtectNonUser>,
+        element:<ProtectFromNonUser><Dashboard /></ProtectFromNonUser>,
         children:[
             // for admin routes
             {
                 path:"/dashboard/admin-home",
-                element:<ProtectNonUser><AdminHome /></ProtectNonUser>
+                element:<ProtectFromNonUser><AdminHome /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/manage-users",
-                element:<ProtectNonUser><ManageUsers /></ProtectNonUser>
+                element:<ProtectFromNonUser><ManageUsers /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/manage-category",
-                element:<ProtectNonUser><ManageCategory /></ProtectNonUser>
+                element:<ProtectFromNonUser><ManageCategory /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/manage-payment",
-                element:<ProtectNonUser><ManagePayment /></ProtectNonUser>
+                element:<ProtectFromNonUser><ManagePayment /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/sales-report",
-                element:<ProtectNonUser><SalesReport /></ProtectNonUser>
+                element:<ProtectFromNonUser><SalesReport /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/banner-advertise",
-                element:<ProtectNonUser><Advertise /></ProtectNonUser>
+                element:<ProtectFromNonUser><Advertise /></ProtectFromNonUser>
             },
             // for seller routes
             {
                 path:"/dashboard/seller-home",
-                element:<ProtectNonUser><SellerHome /></ProtectNonUser>
+                element:<ProtectFromNonUser><SellerHome /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/manage-medicine",
-                element:<ProtectNonUser><ManageMedicine /></ProtectNonUser>
+                element:<ProtectFromNonUser><ManageMedicine /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/payment-history",
-                element:<ProtectNonUser><PayHistory /></ProtectNonUser>
+                element:<ProtectFromNonUser><PayHistory /></ProtectFromNonUser>
             },
             {
                 path:"/dashboard/ask-for-ad",
-                element:<ProtectNonUser><AskForAd /></ProtectNonUser>
+                element:<ProtectFromNonUser><AskForAd /></ProtectFromNonUser>
             },
             // for customer routes
             {
                 path:"/dashboard/customer-payment-history",
-                element:<ProtectNonUser><PaymentHistory /></ProtectNonUser>
+                element:<ProtectFromNonUser><PaymentHistory /></ProtectFromNonUser>
             },
         ]
     },
     {
         path:"/login",
-        element:<Login />
+        element:<ProtectFromUser><Login /></ProtectFromUser>
     },
     {
         path:"/register",
-        element:<Register />
+        element:<ProtectFromUser><Register /></ProtectFromUser>
     },
 ])
 
