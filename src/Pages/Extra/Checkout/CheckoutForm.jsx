@@ -3,15 +3,23 @@ import { toast } from "react-toastify";
 import useAxiosSecure from "../../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
 import { useEffect, useState } from "react";
 import useCart from "../../../Components/Hooks/Cart/useCart";
+import moment from "moment";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
     const stripe = useStripe();
     const [clientSecret , setClientSecret] = useState("")
     const [transactionId , setTransactionId] = useState("")
+    const [loading , setLoading] = useState(false)
+    const [amount , setAmount] = useState(0)
+    const navigate = useNavigate()
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
     const {carts , user} = useCart()
     const totalPrice = carts.reduce((prev, item) => prev + item.perUnitPrice, 0);
+    const allCartsId = carts.map(cart => cart._id)
+
 
     useEffect(() => {
         if(totalPrice > 0){
@@ -24,6 +32,7 @@ const CheckoutForm = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        setLoading(true)
 
         if(!stripe || !elements) {
             return;
@@ -42,8 +51,6 @@ const CheckoutForm = () => {
 
           if (error) {
             toast.error(error.message , {position:"top-center"});
-    } else {
-    //   console.log('[PaymentMethod]', paymentMethod);
     }
 
     // Confirm Card Payments
@@ -57,17 +64,39 @@ const CheckoutForm = () => {
         },
       })
       .then(result => {
-        const err = result.error;
         const paymentIntent = result.paymentIntent;
-        console.log("ERROR" , err);
         if(paymentIntent.status === "succeeded"){
             setTransactionId(paymentIntent.id)
-            // console.log("transaction Id:", paymentIntent.id , parseInt(paymentIntent.amount / 100));
+            setAmount(parseInt(paymentIntent.amount / 100));
           }
       })
       
+      // handle after payment
+      const paymentInfo = {
+        customerName: user?.displayName,
+        customerEmail: user?.email,
+        transactionId,
+        amount,
+        allCartsId,
+        time:moment().format('Do MMM YYYY, h:mm a'),
+      }
 
+      const {data} = await axiosSecure.post('/payments', paymentInfo)
+        if(data.insertedId){
+          const {data} = await axiosSecure.delete(`/delete-all-from-cart/${user?.email}`)
+          if(data.deletedCount){
+            Swal.fire({
+                  title: "Payment Done",
+                  text: "Successful your payment",
+                  icon: "success",
+                  draggable: true,
+                });
+            navigate('/')
+          }
+        }
+        setLoading(false)
     }
+
   
     return (
         <div className="mx-auto p-4 md:w-1/2">
@@ -106,17 +135,18 @@ const CheckoutForm = () => {
               }}
             />
           </div>
-          <button
+          {
+            loading ? <button className="w-full mt-4 btn btn-info">Processing <span className="loading loading-spinner loading-sm"></span></button> : <button
             disabled={!stripe || !clientSecret}
             type="submit"
             className="w-full mt-4 btn btn-info"
           >
             Pay Now
           </button>
+          }
         </form>
       </div>
     );
   };
 
   export default CheckoutForm;
-  

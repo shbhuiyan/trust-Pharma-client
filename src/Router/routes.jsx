@@ -21,6 +21,7 @@ import Checkout from "../Pages/Extra/Checkout/Checkout";
 import ErrorPage from "../Pages/Error/ErrorPage";
 import ProtectFromNonUser from "./ProtectRoute/ProtectFromNonUser";
 import ProtectFromUser from "./ProtectRoute/ProtectFromUser";
+import Invoice from "../Pages/Extra/Invoice/Invoice";
 
 
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path:"/view-cart/checkout",
                 element:<ProtectFromNonUser><Checkout /></ProtectFromNonUser>
+            },
+            {
+                path:"/view-cart/checkout/invoice",
+                element:<ProtectFromNonUser><Invoice /></ProtectFromNonUser>
             },
         ]
     },
