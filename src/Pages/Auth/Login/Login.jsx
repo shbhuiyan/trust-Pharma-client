@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginLottie from "../../../../public/loginLottie.json";
 import GoogleButton from "../../../Components/Buttons/GoogleButton/GoogleButton";
 import { useState } from "react";
@@ -12,6 +12,7 @@ const Login = () => {
   const [hide, setHide] = useState(true);
   const {loginUser , setUser , setLoading, loading} = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const {
     register,
@@ -26,7 +27,7 @@ const Login = () => {
     .then(result => {
       const oldUser = result.user
       setUser(oldUser);
-      navigate("/")
+      navigate(location?.state ? location.state : "/")
       toast.success(`👋 Welcome Back ${oldUser?.displayName || "Anonymous"}` , {position:"top-center"})
     })
     .catch(err => {

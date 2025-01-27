@@ -17,6 +17,9 @@ import ManageMedicine from "../Pages/Dashboard/SellerPages/ManageMedicine/Manage
 import PaymentHistory from "../Pages/Dashboard/UserPages/PaymentHistory/PaymentHistory";
 import SellerHome from "../Pages/Dashboard/SellerPages/SellerHome/SellerHome";
 import ViewCart from "../Pages/Extra/ViewCart/ViewCart";
+import Checkout from "../Pages/Extra/Checkout/Checkout";
+import ProtectNonUser from "./ProtectRoute/ProtectNonUser";
+import ErrorPage from "../Pages/Error/ErrorPage";
 
 
 
@@ -24,6 +27,7 @@ const router = createBrowserRouter([
     {
         path:"/",
         element:<Root />,
+        errorElement:<ErrorPage />,
         children:[
             {
                 path:"/",
@@ -35,60 +39,64 @@ const router = createBrowserRouter([
             },
             {
                 path:"/view-cart",
-                element:<ViewCart />
+                element:<ProtectNonUser><ViewCart /></ProtectNonUser>
+            },
+            {
+                path:"/view-cart/checkout",
+                element:<ProtectNonUser><Checkout /></ProtectNonUser>
             },
         ]
     },
     {
         path:"/dashboard",
-        element:<Dashboard />,
+        element:<ProtectNonUser><Dashboard /></ProtectNonUser>,
         children:[
             // for admin routes
             {
                 path:"/dashboard/admin-home",
-                element:<AdminHome />
+                element:<ProtectNonUser><AdminHome /></ProtectNonUser>
             },
             {
                 path:"/dashboard/manage-users",
-                element:<ManageUsers />
+                element:<ProtectNonUser><ManageUsers /></ProtectNonUser>
             },
             {
                 path:"/dashboard/manage-category",
-                element:<ManageCategory />
+                element:<ProtectNonUser><ManageCategory /></ProtectNonUser>
             },
             {
                 path:"/dashboard/manage-payment",
-                element:<ManagePayment />
+                element:<ProtectNonUser><ManagePayment /></ProtectNonUser>
             },
             {
                 path:"/dashboard/sales-report",
-                element:<SalesReport />
+                element:<ProtectNonUser><SalesReport /></ProtectNonUser>
             },
             {
                 path:"/dashboard/banner-advertise",
-                element:<Advertise />
+                element:<ProtectNonUser><Advertise /></ProtectNonUser>
             },
             // for seller routes
             {
                 path:"/dashboard/seller-home",
-                element:<SellerHome />
+                element:<ProtectNonUser><SellerHome /></ProtectNonUser>
             },
             {
                 path:"/dashboard/manage-medicine",
-                element:<ManageMedicine />
+                element:<ProtectNonUser><ManageMedicine /></ProtectNonUser>
             },
             {
                 path:"/dashboard/payment-history",
-                element:<PayHistory />
+                element:<ProtectNonUser><PayHistory /></ProtectNonUser>
             },
             {
                 path:"/dashboard/ask-for-ad",
-                element:<AskForAd />
+                element:<ProtectNonUser><AskForAd /></ProtectNonUser>
             },
             // for customer routes
             {
                 path:"/dashboard/customer-payment-history",
-                element:<PaymentHistory />
+                element:<ProtectNonUser><PaymentHistory /></ProtectNonUser>
             },
         ]
     },
