@@ -75,7 +75,6 @@ const CheckoutForm = () => {
         time:moment().format('Do MMM YYYY, h:mm a'),
         status:"pending"
       }
-      console.log(paymentInfo);
 
       const {data} = await axiosSecure.post('/payments', paymentInfo)
         if(data.insertedId){
