@@ -11,7 +11,9 @@ const usePayments = (email) => {
     const {data: paymentHistory = [] , refetch} = useQuery({
         queryKey:["paymentHistory" , email],
         queryFn:async() => {
-            const res = await axiosSecure.get(`/payments?email=${email}`)
+            const endpoint = email ? `/payments?email=${email}` : '/payments'
+            
+            const res = await axiosSecure.get(endpoint)
             return res.data
         }
     })
