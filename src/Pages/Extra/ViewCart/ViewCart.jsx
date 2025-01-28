@@ -62,6 +62,18 @@ const ViewCart = () => {
         }
       });
   }
+  const handlePlusQuantity = (id , price , quantity) => {
+    const newPrice = price + price;
+    const newQuantity = quantity + 1;
+    const updateSomeData = {newPrice , newQuantity}
+    
+    axiosSecure.patch(`/cart-item-quantity/${id}` , updateSomeData)
+                .then(res => {
+                    if(res.data.modifiedCount){
+                      refetch()
+                    }
+                })
+  }
 
   return (
     <section className={carts.length || "min-h-screen"}>
@@ -113,15 +125,11 @@ const ViewCart = () => {
                   <td>{cart.cartItemCompany}</td>
                   <td>$ {cart.perUnitPrice}</td>
                   <td className="flex items-center gap-2">
-                    <button>
-                      <GoPlus className="text-xl" />
-                    </button>
+                      <GoPlus onClick={()=>handlePlusQuantity(cart._id,cart.perUnitPrice,cart.cartItemQuantity)} className="text-xl hover:cursor-pointer" />
                     <span className="border-2 py-1 px-2">
                       {cart.cartItemQuantity}
                     </span>
-                    <button>
-                      <PiMinusLight className="text-xl" />
-                    </button>
+                      <PiMinusLight className="text-xl hover:cursor-pointer" />
                   </td>
                   <td>
                     <button

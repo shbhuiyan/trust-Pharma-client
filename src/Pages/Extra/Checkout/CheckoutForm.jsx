@@ -18,7 +18,9 @@ const CheckoutForm = () => {
     const totalPrice = carts.reduce((prev, item) => prev + item.perUnitPrice, 0);
     const allCartsInfo = carts.map(cart => {
       return {
-        id:cart._id , price:cart.perUnitPrice
+        id:cart._id ,
+        price:cart.perUnitPrice,
+        quantity:cart.cartItemQuantity,
       }
     })
 
