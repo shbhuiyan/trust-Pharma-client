@@ -9,7 +9,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_Stripe_PK);
 
 const Checkout = () => {
     const {carts} = useCart()
-    const totalPrice = carts.reduce((prev, item) => prev + item.perUnitPrice, 0);
+    const totalPrice = carts.reduce((prev, item) => prev + item.price, 0);
 
   return (
     <section className={carts.length || "min-h-screen"}>
@@ -38,6 +38,7 @@ const Checkout = () => {
                     <th>#</th>
                     <th>Medicine Image</th>
                     <th>Medicine Name</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                   </tr>
                 </thead>
@@ -58,6 +59,7 @@ const Checkout = () => {
                           </div>
                         </td>
                         <td>{cart.cartItemName}</td>
+                        <td>{cart.cartItemQuantity}</td>
                         <td>$ {cart.perUnitPrice}</td>
                       </tr>
                     );
@@ -65,6 +67,7 @@ const Checkout = () => {
                 </tbody>
                 <tfoot className="text-lg text-black/80">
                   <tr>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th>Total Price:</th>

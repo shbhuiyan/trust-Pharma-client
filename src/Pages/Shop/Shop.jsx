@@ -16,10 +16,13 @@ const Shop = () => {
     const handleAddToCart = (medicine) => {
       const cartItem = {
         cartItemName:medicine.medicineName,
+        medicineId:medicine._id,
         cartItemImage:medicine.medicineImage,
         cartItemCompany:medicine.company,
         cartItemCategory:medicine.category,
         perUnitPrice:medicine.price,
+        price:medicine.price,
+        sellerEmail:medicine.sellerEmail,
         cartItemQuantity:1,
         userEmail: user?.email,
         userName: user?.displayName,

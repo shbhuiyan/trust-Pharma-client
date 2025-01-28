@@ -15,12 +15,14 @@ const CheckoutForm = () => {
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
     const {carts , user} = useCart()
-    const totalPrice = carts.reduce((prev, item) => prev + item.perUnitPrice, 0);
+    const totalPrice = carts.reduce((prev, item) => prev + item.price, 0);
     const allCartsInfo = carts.map(cart => {
       return {
-        id:cart._id ,
-        price:cart.perUnitPrice,
+        itemId:cart.medicineId ,
+        itemName:cart.cartItemName,
+        price:cart.price,
         quantity:cart.cartItemQuantity,
+        sellerEmail:cart.sellerEmail
       }
     })
 

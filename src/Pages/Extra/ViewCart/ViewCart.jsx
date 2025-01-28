@@ -63,11 +63,21 @@ const ViewCart = () => {
       });
   }
   const handlePlusQuantity = (id , price , quantity) => {
-    const newPrice = price + price;
-    const newQuantity = quantity + 1;
-    const updateSomeData = {newPrice , newQuantity}
+    const updateSomeData = {price , quantity}
     
     axiosSecure.patch(`/cart-item-quantity/${id}` , updateSomeData)
+                .then(res => {
+                  console.log(res.data);
+                    if(res.data.modifiedCount){
+                      refetch()
+                    }
+                })
+  }
+
+  const handleMinusQuantity = (id , price , quantity) => {
+    const updateSomeData = {price , quantity}
+    
+    axiosSecure.patch(`/cart-item-quantity/${id}?plus=${true}` , updateSomeData)
                 .then(res => {
                     if(res.data.modifiedCount){
                       refetch()
@@ -123,13 +133,17 @@ const ViewCart = () => {
                   <td>{cart.cartItemName}</td>
                   <td>{cart.cartItemCategory}</td>
                   <td>{cart.cartItemCompany}</td>
-                  <td>$ {cart.perUnitPrice}</td>
+                  <td>$ {cart.price}</td>
                   <td className="flex items-center gap-2">
-                      <GoPlus onClick={()=>handlePlusQuantity(cart._id,cart.perUnitPrice,cart.cartItemQuantity)} className="text-xl hover:cursor-pointer" />
+                      <button>
+                      <GoPlus onClick={()=>handlePlusQuantity(cart._id,cart.perUnitPrice,cart.cartItemQuantity)} className="text-xl" />
+                      </button>
                     <span className="border-2 py-1 px-2">
                       {cart.cartItemQuantity}
                     </span>
-                      <PiMinusLight className="text-xl hover:cursor-pointer" />
+                      <button disabled={cart.cartItemQuantity === 1 && true}>
+                      <PiMinusLight onClick={()=>handleMinusQuantity(cart._id,cart.perUnitPrice,cart.cartItemQuantity)} className="text-xl" />
+                      </button>
                   </td>
                   <td>
                     <button

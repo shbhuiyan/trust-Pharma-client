@@ -19,19 +19,23 @@ const DiscountsCard = ({ medicine }) => {
     discount,
     price,
     unit,
-    _id
+    _id,
+    sellerEmail
   } = medicine;
 
 
   const handleAddToCart = () => {
         const cartItem = {
-          cartItemName:medicine.medicineName,
-          cartItemCompany:medicine.company,
-          cartItemCategory:medicine.category,
-          perUnitPrice:medicine.price,
+          cartItemName:medicineName,
+          medicineId:_id,
+          cartItemCompany:company,
+          cartItemCategory:category,
+          perUnitPrice:price,
+          price:price,
           cartItemQuantity:1,
           userEmail: user?.email,
           userName: user?.displayName,
+          sellerEmail
         }
         
         axiosSecure.post('/cart-items', cartItem)
