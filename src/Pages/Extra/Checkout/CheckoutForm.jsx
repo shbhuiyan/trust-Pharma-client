@@ -16,8 +16,11 @@ const CheckoutForm = () => {
     const axiosSecure = useAxiosSecure();
     const {carts , user} = useCart()
     const totalPrice = carts.reduce((prev, item) => prev + item.perUnitPrice, 0);
-    const allCartsId = carts.map(cart => cart._id)
-
+    const allCartsInfo = carts.map(cart => {
+      return {
+        id:cart._id , price:cart.perUnitPrice
+      }
+    })
 
     useEffect(() => {
         if(totalPrice > 0){
@@ -71,7 +74,7 @@ const CheckoutForm = () => {
         customerEmail: user?.email,
         transactionId:paymentIntent.id,
         amount:parseInt(paymentIntent.amount / 100),
-        allCartsId,
+        allCartsInfo,
         time:moment().format('Do MMM YYYY, h:mm a'),
         status:"pending"
       }

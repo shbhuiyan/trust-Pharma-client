@@ -128,7 +128,7 @@ const ManageCategory = () => {
     <section className="my-10">
       <div className="flex max-md:flex-col justify-evenly items-center">
         <h1 className="text-4xl font-bold text-blue-500 text-center">
-          Total Number Of Users : {categories.length}
+          Total Number Of Categories : {categories.length}
         </h1>
         <button
           className="btn btn-outline btn-info text-base"

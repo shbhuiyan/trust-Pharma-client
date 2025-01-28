@@ -7,7 +7,7 @@ const PaymentHistory = () => {
 
   return (
     <section className="my-10">
-      <div className="max-w-xl mx-auto text-center">
+      <div className="max-w-xl space-y-4 mx-auto text-center">
         <h3 className="text-3xl font-bold text-blue-500 capitalize">
           Track Your Payments, Stay Informed{" "}
         </h3>

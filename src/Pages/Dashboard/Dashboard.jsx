@@ -25,23 +25,23 @@ const Dashboard = () => {
     },[axiosSecure, user?.email])
 
     const adminDashboard = <>
-    <li><NavLink to="/dashboard/admin-home" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaHome /> Admin Home</NavLink></li>
-    <li><NavLink to="/dashboard/manage-users" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaUsersCog /> Manage Users</NavLink></li>
-    <li><NavLink to="/dashboard/manage-category" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdCategory /> Manage Category</NavLink></li>
-    <li><NavLink to="/dashboard/manage-payment" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdOutlinePayment /> Payment management</NavLink></li>
-    <li><NavLink to="/dashboard/sales-report" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaChartPie /> Sales Report</NavLink></li>
-    <li><NavLink to="/dashboard/banner-advertise" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaAd /> Banner Advertise</NavLink></li>
+    <li><NavLink to="/dashboard/admin-home" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><FaHome /> Admin Home</NavLink></li>
+    <li><NavLink to="/dashboard/manage-users" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><FaUsersCog /> Manage Users</NavLink></li>
+    <li><NavLink to="/dashboard/manage-category" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><MdCategory /> Manage Category</NavLink></li>
+    <li><NavLink to="/dashboard/manage-payment" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><MdOutlinePayment /> Payment management</NavLink></li>
+    <li><NavLink to="/dashboard/sales-report" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><FaChartPie /> Sales Report</NavLink></li>
+    <li><NavLink to="/dashboard/banner-advertise" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><FaAd /> Banner Advertise</NavLink></li>
     </>
 
     const sellerDashboard = <>
-    <li><NavLink to="/dashboard/seller-home" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaHome /> Seller Home</NavLink></li>
-    <li><NavLink to="/dashboard/manage-medicine" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><AiFillMedicineBox /> Manage Medicines</NavLink></li>
-    <li><NavLink to="/dashboard/payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdOutlinePayment /> Payment History</NavLink></li>
-    <li><NavLink to="/dashboard/ask-for-ad" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaAd /> Ask For Advertise</NavLink></li>
+    <li><NavLink to="/dashboard/seller-home" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><FaHome /> Seller Home</NavLink></li>
+    <li><NavLink to="/dashboard/manage-medicine" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><AiFillMedicineBox /> Manage Medicines</NavLink></li>
+    <li><NavLink to="/dashboard/payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><MdOutlinePayment /> Payment History</NavLink></li>
+    <li><NavLink to="/dashboard/ask-for-ad" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><FaAd /> Ask For Advertise</NavLink></li>
     </>
 
     const customerDashboard = <>
-    <li><NavLink to="/dashboard/customer-payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><MdOutlinePayment /> Payment History</NavLink></li>
+    <li><NavLink to="/dashboard/customer-payment-history" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><MdOutlinePayment /> Payment History</NavLink></li>
     </>
 
     const handleLogout = () => {
@@ -80,10 +80,10 @@ const Dashboard = () => {
             </ul>
             <div className="divider"></div>
             <ul className="text-xl font-medium py-4">
-            <li><Link to="/" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><IoHomeOutline /> Home</Link></li>
-            <li><Link to="/shop" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white"><FaShop /> Shop</Link></li>
+            <li><Link to="/" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><IoHomeOutline /> Home</Link></li>
+            <li><Link to="/shop" className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black"><FaShop /> Shop</Link></li>
             <li>
-              <Link className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white" onClick={handleLogout}><FaSignOutAlt /> Logout</Link>
+              <Link className="flex items-center gap-2 capitalize px-4 py-2 hover:text-white hover:bg-black" onClick={handleLogout}><FaSignOutAlt /> Logout</Link>
             </li>
             </ul>
             </aside>

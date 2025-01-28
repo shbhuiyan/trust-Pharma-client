@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import SectionTitle from "../../../Components/Shared/SectionTitle";
 
 // Import Swiper React components
@@ -14,13 +13,9 @@ import DiscountsCard from "./DiscountsCard";
 import useAllMedicines from "../../../Components/Hooks/GetAllMedicines/useAllMedicines";
 
 const Discounts = () => {
-    const [discountItems , setDiscountItems] = useState([])
     const {medicines} = useAllMedicines()
+    const discountItems = medicines?.filter(medicine => medicine?.discount);
 
-    useEffect(() => {
-        const discount = medicines.filter(medicine => medicine?.discount);
-        setDiscountItems(discount);
-    },[medicines])
 
     return (
         <div className="px-4">

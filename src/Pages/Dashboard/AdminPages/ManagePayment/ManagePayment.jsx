@@ -24,7 +24,7 @@ const ManagePayment = () => {
 
     return (
         <section className="my-10">
-            <div className="max-w-2xl mx-auto text-center">
+            <div className="max-w-2xl space-y-4 mx-auto text-center">
             <h3 className="text-3xl font-bold text-blue-500 capitalize">
             Payment Management </h3>
             <p className="font-medium">View and manage all payment details. Update payment status with a single click.</p>
