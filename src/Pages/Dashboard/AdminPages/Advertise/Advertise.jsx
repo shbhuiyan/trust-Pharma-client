@@ -7,6 +7,31 @@ const Advertise = () => {
     const {bannerSliders , refetch} = useBannerSlider()
     const axiosSecure = useAxiosSecure()
 
+    const handleDeleteBannerSlide = (id) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you want to remove this Advertisement from Banner?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, remove it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axiosSecure.delete(`/delete-from-banner-sliders/${id}`).then((res) => {
+              if (res.data.deletedCount) {
+                Swal.fire({
+                  title: "Removed!",
+                  text: "Advertisement has been removed.",
+                  icon: "success",
+                });
+                refetch();
+              }
+            });
+          }
+        });
+      };
+
     const handleStatusChange = (statusValue , id) => {
             axiosSecure.patch(`/banner-sliders/${id}` , {status:statusValue})
             .then(res => {
@@ -90,7 +115,7 @@ const Advertise = () => {
                   </td>
                   <td>
                     <button
-                    //   onClick={() => handleDeleteFromCart(cart._id)}
+                      onClick={() => handleDeleteBannerSlide(bannerSlide._id)}
                       className="btn btn-ghost"
                     >
                       <FaTrashAlt className="text-xl text-red-500" />

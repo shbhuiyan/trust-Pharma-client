@@ -12,7 +12,7 @@ const Banner = () => {
         <div>
              <Carousel showArrows={true}  autoPlay={true} infiniteLoop={true}>
                 {
-                    banners.map((banner , i) => <div className="max-h-[750px]" key={i}>
+                    banners.map((banner , i) => <div className="max-h-[600px]" key={i}>
                         <img src={banner?.medicineImage} alt="Banner Image" />
                     </div> )
                 }
