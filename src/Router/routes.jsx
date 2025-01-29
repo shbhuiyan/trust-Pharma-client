@@ -22,6 +22,7 @@ import ErrorPage from "../Pages/Error/ErrorPage";
 import ProtectFromNonUser from "./ProtectRoute/ProtectFromNonUser";
 import ProtectFromUser from "./ProtectRoute/ProtectFromUser";
 import Invoice from "../Pages/Extra/Invoice/Invoice";
+import Categories from "../Pages/Shop/Categories/Categories";
 
 
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
             {
                 path:"/shop",
                 element:<Shop />
+            },
+            {
+                path:"/shop/categories/:category",
+                element:<Categories />
             },
             {
                 path:"/view-cart",

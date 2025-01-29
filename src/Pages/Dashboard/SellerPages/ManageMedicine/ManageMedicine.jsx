@@ -25,7 +25,7 @@ const ManageMedicine = () => {
         const unit = form.get("unit");
         const discount = form.get("discount");
         const price = form.get("price");
-        const email = user?.email;
+        const sellerEmail = user?.email;
 
         if(price < 1 || discount < 0){
                 const modal = document.getElementById("my_modal_add_medicine")
@@ -46,7 +46,7 @@ const ManageMedicine = () => {
         );
         const medicineImage = res.data.data.display_url;
 
-        const newMedicine = {medicineName , medicineImage , genericName , description , category , company , unit , discount , price , email};
+        const newMedicine = {medicineName , medicineImage , genericName , description , category , company , unit , discount , price , sellerEmail};
 
         const {data} = await axiosSecure.post('/medicines' , newMedicine)
             if(data.insertedId){

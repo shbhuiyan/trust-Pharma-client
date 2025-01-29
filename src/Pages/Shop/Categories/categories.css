@@ -1,0 +1,11 @@
+#tablist .react-tabs__tab--selected{
+    color: #2563EB;
+    border-left: 2px solid #3B82F6;
+    border-top: 2px solid #3B82F6;
+    border-right: 2px solid #3B82F6;
+    border-bottom: none;
+}
+
+#tablist .react-tabs__tab:hover {
+    color: #1D4ED8;
+}
