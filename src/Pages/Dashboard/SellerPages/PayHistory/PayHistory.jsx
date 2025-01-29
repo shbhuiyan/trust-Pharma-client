@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../../../Components/Hooks/AuthProviderHooks/useAuth";
 import useAxiosSecure from "../../../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
-import usePayments from "../../../../Components/Hooks/Payments/usePayments";
 
 const PayHistory = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure()
-    const {paymentHistory} = usePayments()
-    const [paymentDetails , setPaymentDetails] = useState([])
-
+    const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        axiosSecure.get(`/payments-details/${user?.email}`)
-        .then(res => {
-            console.log(res.data.map(data=> data.itemName));
-            setPaymentDetails(res.data)
-        })
-    },[axiosSecure, user?.email])
+      const fetchOrders = async () => {
+              const res = await axiosSecure.get(`payments-details?sellerEmail=${user.email}`);
+              setOrders(res.data);
+      };
+
+      if (user?.email) {
+          fetchOrders();
+      }
+  }, [axiosSecure, user.email]);
     
     return (
         <section className="my-10">
@@ -45,29 +45,31 @@ const PayHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {paymentDetails.map((payment, i) => {
-              return (
-                <tr key={payment._id}>
-                  <td>{i + 1}</td>
-                  <td>{payment.itemName}</td>
-                  <td>{paymentHistory.map(pay => pay.customerEmail)}</td>
-                  <td>{payment.quantity}</td>
-                  <td>$ {payment.price}</td>
-                  <td>{paymentHistory.map(pay => pay.time)}</td>
+          {orders.map((order, index) =>
+            order.allCartsInfo
+                .filter(cart => cart.sellerEmail === user.email)
+                .map((cart, cartIndex) => (
+                <tr key={`${order._id}-${cartIndex}`}>
+                  <td>{index + 1}</td>
+                  <td>{cart.itemName}</td>
+                  <td>{order.customerEmail}</td>
+                  <td>{cart.quantity}</td>
+                  <td>$ {cart.price}</td>
+                  <td>{order.time}</td>
                   <td>
                     <span
                       className={
-                        payment.status === "pending"
+                        order.status === "pending"
                           ? "bg-yellow-300 font-semibold capitalize px-2 py-1 rounded-xl"
                           : "bg-green-300/80 font-semibold capitalize px-2 py-1 rounded-xl"
                       }
                     >
-                      {paymentHistory.map(pay => pay.status)}
+                      {order.status}
                     </span>
                   </td>
                 </tr>
-              );
-            })}
+                ))
+            )}
           </tbody>
         </table>
       </div>
