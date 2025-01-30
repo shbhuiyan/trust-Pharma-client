@@ -168,7 +168,6 @@ const ManageMedicine = () => {
       axiosSecure
         .put(`/medicine-update/${medicine._id}`, updateMedicine)
         .then((res) => {
-          console.log(res.data);
           if (res.data.modifiedCount) {
             Swal.fire({
               title: "Successfully Updated!",
