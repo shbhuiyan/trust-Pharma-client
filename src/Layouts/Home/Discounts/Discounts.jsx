@@ -14,7 +14,7 @@ import useAllMedicines from "../../../Components/Hooks/GetAllMedicines/useAllMed
 
 const Discounts = () => {
     const {medicines} = useAllMedicines()
-    const discountItems = medicines?.filter(medicine => medicine?.discount);
+    const discountItems = medicines?.filter(medicine => medicine?.discount > 0);
 
 
     return (

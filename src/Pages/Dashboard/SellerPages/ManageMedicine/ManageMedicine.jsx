@@ -29,7 +29,7 @@ const ManageMedicine = () => {
     const company = form.get("company");
     const unit = form.get("unit");
     const discount = form.get("discount");
-    const price = form.get("price");
+    const price = parseInt(form.get("price"));
     const sellerEmail = user?.email;
 
     if (price < 1 || discount < 0) {
@@ -128,7 +128,7 @@ const ManageMedicine = () => {
     const company = form.get("company");
     const unit = form.get("unit");
     const discount = form.get("discount");
-    const price = form.get("price");
+    const price = parseInt(form.get("price"));
     const sellerEmail = user?.email;
 
     if (price < 1 || discount < 0) {
@@ -576,7 +576,7 @@ const ManageMedicine = () => {
                   id="category"
                   required
                   name="category"
-                  defaultValue={medicine.category}
+                  defaultValue=""
                   className="w-full py-2 focus:outline-none  border border-gray-300 rounded-md px-3"
                 >
                   <option disabled value="">

@@ -29,7 +29,7 @@ const Nav = () => {
             // console.log(res.data.role);
         })
 
-    const total = carts.reduce((prev, item) => prev + item.price, 0);
+    const total = carts.reduce((prev, item) => prev + parseInt(item.price), 0);
         setTotalPrice(total);
     },[axiosSecure, carts, user?.email])
 
