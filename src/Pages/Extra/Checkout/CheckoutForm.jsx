@@ -6,9 +6,11 @@ import useCart from "../../../Components/Hooks/Cart/useCart";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../../Components/Hooks/AuthProviderHooks/useAuth";
 
 const CheckoutForm = () => {
     const stripe = useStripe();
+    const {setTransactionId} = useAuth()
     const [clientSecret , setClientSecret] = useState("")
     const [loading , setLoading] = useState(false)
     const navigate = useNavigate()
@@ -71,7 +73,7 @@ const CheckoutForm = () => {
       
         const paymentIntent = result.paymentIntent;
         if(paymentIntent.status === "succeeded"){
-      
+          setTransactionId(paymentIntent.id)
       // handle after payment
       const paymentInfo = {
         customerName: user?.displayName,
@@ -93,7 +95,7 @@ const CheckoutForm = () => {
                   icon: "success",
                   draggable: true,
                 });
-            navigate('/')
+            navigate('/view-cart/checkout/invoice')
           }
         }}
         setLoading(false)

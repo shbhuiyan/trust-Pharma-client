@@ -39,16 +39,18 @@ const ViewCart = () => {
 
   const handleRemoveAllItems = () => {
     Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to remove all items from cart?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, remove all!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          axiosSecure.delete(`/delete-all-from-cart/${user?.email}`).then((res) => {
+      title: "Are you sure?",
+      text: "Do you want to remove all items from cart?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove all!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/delete-all-from-cart/${user?.email}`)
+          .then((res) => {
             console.log(res.data);
             if (res.data.deletedCount) {
               Swal.fire({
@@ -59,31 +61,32 @@ const ViewCart = () => {
               refetch();
             }
           });
+      }
+    });
+  };
+  const handlePlusQuantity = (id, price, quantity) => {
+    const updateSomeData = { price, quantity };
+
+    axiosSecure
+      .patch(`/cart-item-quantity/${id}`, updateSomeData)
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          refetch();
         }
       });
-  }
-  const handlePlusQuantity = (id , price , quantity) => {
-    const updateSomeData = {price , quantity}
-    
-    axiosSecure.patch(`/cart-item-quantity/${id}` , updateSomeData)
-                .then(res => {
-                  console.log(res.data);
-                    if(res.data.modifiedCount){
-                      refetch()
-                    }
-                })
-  }
+  };
 
-  const handleMinusQuantity = (id , price , quantity) => {
-    const updateSomeData = {price , quantity}
-    
-    axiosSecure.patch(`/cart-item-quantity/${id}?plus=${true}` , updateSomeData)
-                .then(res => {
-                    if(res.data.modifiedCount){
-                      refetch()
-                    }
-                })
-  }
+  const handleMinusQuantity = (id, price, quantity) => {
+    const updateSomeData = { price, quantity };
+
+    axiosSecure
+      .patch(`/cart-item-quantity/${id}?plus=${true}`, updateSomeData)
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          refetch();
+        }
+      });
+  };
 
   return (
     <section className={carts.length || "min-h-screen"}>
@@ -135,15 +138,33 @@ const ViewCart = () => {
                   <td>{cart.cartItemCompany}</td>
                   <td>$ {cart.price}</td>
                   <td className="flex items-center gap-2">
-                      <button>
-                      <GoPlus onClick={()=>handlePlusQuantity(cart._id,cart.perUnitPrice,cart.cartItemQuantity)} className="text-xl" />
-                      </button>
+                    <button>
+                      <GoPlus
+                        onClick={() =>
+                          handlePlusQuantity(
+                            cart._id,
+                            cart.perUnitPrice,
+                            cart.cartItemQuantity
+                          )
+                        }
+                        className="text-xl"
+                      />
+                    </button>
                     <span className="border-2 py-1 px-2">
                       {cart.cartItemQuantity}
                     </span>
-                      <button disabled={cart.cartItemQuantity === 1 && true}>
-                      <PiMinusLight onClick={()=>handleMinusQuantity(cart._id,cart.perUnitPrice,cart.cartItemQuantity)} className="text-xl" />
-                      </button>
+                    <button disabled={cart.cartItemQuantity === 1 && true}>
+                      <PiMinusLight
+                        onClick={() =>
+                          handleMinusQuantity(
+                            cart._id,
+                            cart.perUnitPrice,
+                            cart.cartItemQuantity
+                          )
+                        }
+                        className="text-xl"
+                      />
+                    </button>
                   </td>
                   <td>
                     <button
@@ -160,8 +181,20 @@ const ViewCart = () => {
         </table>
       </div>
       <div className="flex items-center gap-4">
-      <button disabled={carts.length < 1 && true} onClick={handleRemoveAllItems} className="btn btn-warning">Remove All Items</button>
-      <Link to="/view-cart/checkout" disabled={carts.length < 1 && true} className="btn btn-info" >Checkout</Link>
+        <button
+          disabled={carts.length < 1 && true}
+          onClick={handleRemoveAllItems}
+          className="btn btn-warning"
+        >
+          Remove All Items
+        </button>
+        <Link
+          to="/view-cart/checkout"
+          disabled={carts.length < 1 && true}
+          className="btn btn-info"
+        >
+          Checkout
+        </Link>
       </div>
     </section>
   );

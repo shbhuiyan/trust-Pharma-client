@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-
+  const [transactionId , setTransactionId] = useState("")
     const [user , setUser] = useState(null)
     const [loading , setLoading] = useState(true)
 
@@ -59,6 +59,8 @@ const AuthProvider = ({ children }) => {
         loginUser,
         userLogOut,
         loginWithGoogle,
+        transactionId,
+        setTransactionId
     }
 
   return <AuthContext.Provider value={authInfo} >
