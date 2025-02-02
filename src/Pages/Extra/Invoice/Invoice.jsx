@@ -4,13 +4,19 @@ import usePayments from "../../../Components/Hooks/Payments/usePayments";
 import useAuth from "../../../Components/Hooks/AuthProviderHooks/useAuth";
 import moment from "moment";
 import { FaPrint } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import domtoimage from "dom-to-image";
 
 const Invoice = () => {
     const {paymentHistory} = usePayments()
     const {user , transactionId} = useAuth()
+    const navigate = useNavigate()
+    if(!transactionId){
+        navigate("/")
+    }
     const axiosSecure = useAxiosSecure()
     const time = moment().format('Do MMMM YYYY')
-
     const { data: invoiceReport = [] } = useQuery({
         queryKey: ["SalesReport" , user?.email],
         queryFn: async () => {
@@ -20,8 +26,23 @@ const Invoice = () => {
       });
     const subTotalPrice = invoiceReport.reduce((prev, item) => prev + item.totalPrice, 0);
 
+
+    const handleDownloadPDF = () => {
+      const invoiceElement = document.getElementById("invoice");
+      domtoimage.toPng(invoiceElement)
+      .then(dataUrl => {
+        const pdf = new jsPDF("p", "mm", "a4");
+        const imgWidth = 210;
+        const imgHeight = (invoiceElement.offsetHeight * imgWidth) / invoiceElement.offsetWidth;
+
+        pdf.addImage(dataUrl, "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.save("TrustPharma-invoice.pdf");
+    })
+    }
+
     return (
-        <section className="my-10 border p-10 rounded-lg font-inter space-y-16">
+        <section className="my-10">
+        <div id="invoice" className="p-20 rounded-lg font-inter space-y-16">
             <div className="flex justify-between items-center">
             <h1 className="font-bold font-cinzel text-4xl">
             <span className="text-blue-500">Trust</span>Pharma
@@ -55,7 +76,7 @@ const Invoice = () => {
           </thead>
           <tbody>
           {
-            invoiceReport.map((report , i) => <tr key={report._id}>
+            invoiceReport.map((report , i) => <tr key={i}>
                 <td>{i+1}</td>
                 <td>{report.medicineName}</td>
                 <td>{report.totalBuy}</td>
@@ -75,11 +96,11 @@ const Invoice = () => {
                 </tfoot>
         </table>
       </div>
-          <hr />
-          <div className="flex justify-between items-center">
-          <p className="text-lg font-medium">Thank you for your purchase!</p>
-          <button className="btn btn-info">Print Invoice <FaPrint/> </button>
-          </div>
+          <p className="text-xl font-medium text-center">Thank you for your purchase!</p>
+        </div>
+        <div className="text-end pr-5">
+          <button onClick={handleDownloadPDF} className="btn btn-info mt-5">Print Invoice <FaPrint/> </button>
+        </div>
         </section>
     );
 };

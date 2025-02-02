@@ -4,13 +4,18 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import useCart from "../../../Components/Hooks/Cart/useCart";
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Stripe_PK);
 
 const Checkout = () => {
     const {carts} = useCart()
+    const navigate = useNavigate()
     const totalPrice = carts.reduce((prev, item) => prev + item.price, 0);
 
+  if(!carts.length){
+  navigate("/")
+  }
   return (
     <section className={carts.length || "min-h-screen"}>
       <div className="flex max-md:flex-col-reverse justify-center items-end">

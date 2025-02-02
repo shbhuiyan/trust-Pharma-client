@@ -27,6 +27,7 @@ const DiscountsCard = ({ medicine }) => {
   const handleAddToCart = () => {
         const cartItem = {
           cartItemName:medicineName,
+          cartItemImage:medicineImage,
           medicineId:_id,
           cartItemCompany:company,
           cartItemCategory:category,
