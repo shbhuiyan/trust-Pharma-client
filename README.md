@@ -93,23 +93,6 @@ npm install
 
 ---
 
-### 📁 `PROJECT-STRUCTURE.md`
-
-```markdown
-# 🗂️ Project Structure
-
-trust-pharma/
-├── client/ (React frontend)
-│ ├── src/
-│ │ ├── components/
-│ │ ├── pages/
-│ │ ├── hooks/
-│ │ ├── routes/
-│ │ ├── contexts/
-│ │ ├── assets/
-│ │ └── main.jsx
-│ └── .env
-
 # ▶️ Usage
 
 - Visit the app at [http://localhost:5173](http://localhost:5173)
