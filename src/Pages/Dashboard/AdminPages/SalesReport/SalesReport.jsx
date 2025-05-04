@@ -1,4 +1,4 @@
-import { FaDownload } from "react-icons/fa";
+// import { FaDownload } from "react-icons/fa";
 import { useQuery } from "react-query";
 import useAxiosSecure from "../../../../Components/Hooks/Axios/AxiosSecure/useAxiosSecure";
 
@@ -13,7 +13,7 @@ const SalesReport = () => {
         },
       });
 
-
+// TODO: report and filter button pore kaj korbo.
 
     return (
         <section className="my-10 font-cinzel">
@@ -21,7 +21,8 @@ const SalesReport = () => {
                 <h1 className="text-4xl font-bold text-blue-500 text-center">
                 📊 Sales Report Dashboard
                 </h1>
-                <div className="space-x-4">
+
+                {/* <div className="space-x-4">
                 <button
                   className="btn btn-outline btn-info text-base"
                 >
@@ -33,7 +34,7 @@ const SalesReport = () => {
                 >
                   Filter Report
                 </button>
-                </div>
+                </div> */}
             </div>
 
             <div className="overflow-x-auto my-20 font-inter">
